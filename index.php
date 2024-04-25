@@ -12,72 +12,61 @@
 </head>
 
 <body>
-<!-- Navigation Bar -->
-        <div class="navbar-start">
-            <a class="navbar-item" href="index.php?page=addlead">
-                add lead
-            </a>
-
-            <a class="navbar-item" href="index.php?page=getstatuses">
-                get statuses
-            </a>
-        </div>
-
-
 <!-- Content Section -->
 <section class="section">
     <div class="container">
+        <div class="navbar navbar-start">
+            <a href="index.php?page=addlead">Add lead</a> |
+            <a href="index.php?page=getstatuses">See statuses</a>
+        </div>
+
         <h1 class="title">
             Welcome to LeadBay
         </h1>
         <?php if (!isset($_GET['page']) || $_GET['page'] === 'addlead'): ?>
-            <p>page is not defined, so switching to form</p>
-            <form action="#" method="post">
-
-                <!-- First Name Field -->
+            <div x-data="addlead">
+                <form action="#" method="post">
                 <div class="field">
                     <label class="label">First Name</label>
                     <div class="control">
-                        <input class="input" type="text" name="firstName" placeholder="Enter your first name" required>
+                        <input x-model="lead.firstName" class="input" type="text" name="firstName" placeholder="Enter your first name" required>
                     </div>
                 </div>
-
-                <!-- Last Name Field -->
                 <div class="field">
                     <label class="label">Last Name</label>
                     <div class="control">
-                        <input class="input" type="text" name="lastName" placeholder="Enter your last name" required>
+                        <input x-model="lead.lastName" class="input" type="text" name="lastName" placeholder="Enter your last name" required>
                     </div>
                 </div>
-
-                <!-- Phone Field -->
                 <div class="field">
                     <label class="label">Phone</label>
                     <div class="control">
-                        <input class="input" type="tel" name="phone" placeholder="Enter your phone number" required>
+                        <input x-model="lead.phone" class="input" type="tel" name="phone" placeholder="Enter your phone number" required>
                     </div>
                 </div>
-
-                <!-- Email Field -->
                 <div class="field">
                     <label class="label">Email</label>
                     <div class="control">
-                        <input class="input" type="email" name="email" placeholder="Enter your email" required>
+                        <input x-model="lead.email" class="input" type="email" name="email" placeholder="Enter your email" required>
                     </div>
                 </div>
 
-                <!-- Submit Button -->
                 <div class="field">
                     <div class="control">
-                        <button class="button is-primary" type="submit">Submit</button>
+                        <button @click="sendMessage" class="button is-primary" type="button">Submit</button>
                     </div>
                 </div>
 
-            </form>
+                </form>
+            </div>
         <?php elseif (isset($_GET['page']) && $_GET['page'] === 'getstatuses'): ?>
-            <p> lets review leads statuses</p>
             <div x-data="getstatuses">
-                <span x-text="greeting"></span>
+                <span x-text="greeting" x-init="getStatuses"></span>
+                <form action="#" method="post">
+                    <input x-model="start" type="date" name="start" placeholder="Enter startDate">
+                    <input x-model="end" type="date" name="end" placeholder="Enter endDate">
+                    <button @click="getStatuses">refresh statuses</button>
+                </form>
                 <table class=" table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
                     <thead>
                     <tr>
@@ -87,22 +76,21 @@
                         <th>FTD</th>
                     </tr>
                     </thead>
+
                     <tbody>
+                    <template x-for="status in statuses">
                     <tr>
-                        <td>1</td>
-                        <td>example1@example.com</td>
-                        <td><span class="tag is-success">Active</span></td>
-                        <td>Yes</td>
+                        <td><span x-text="status.id"></span></td>
+                        <td><span x-text="status.email"></span></td>
+                        <td><span class="tag" x-text="status.status ? 'Active' : 'Inactive'"></span></td>
+                        <td><span x-text="status.ftd===1 ? 'Yes' : 'No'"></span></td>
                     </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>example2@example.com</td>
-                        <td><span class="tag is-danger">Inactive</span></td>
-                        <td>No</td>
-                    </tr>
+                    </template>
                     </tbody>
                 </table>
+
             </div>
+
         <?php endif; ?>
     </div>
 </section>
