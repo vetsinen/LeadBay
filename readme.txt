@@ -1,0 +1,1 @@
+before running this app you need rename .env.example to .env and insert token value

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bulma CSS Navigation</title>
+    <title>Welcome to HamsterLand</title>
     <!-- Linking to Bulma CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.8/dist/cdn.min.js" defer></script>
@@ -15,16 +15,17 @@
 <!-- Content Section -->
 <section class="section">
     <div class="container">
+        <h1 class="title">
+            Welcome to HamsterLand
+        </h1>
         <div class="navbar navbar-start">
             <a href="index.php?page=addlead">Add lead</a> |
             <a href="index.php?page=getstatuses">See statuses</a>
         </div>
 
-        <h1 class="title">
-            Welcome to LeadBay
-        </h1>
+
         <?php if (!isset($_GET['page']) || $_GET['page'] === 'addlead'): ?>
-            <div x-data="addlead">
+            <div x-data="addleadComponent">
                 <form action="#" method="post">
                 <div class="field">
                     <label class="label">First Name</label>
@@ -60,13 +61,12 @@
                 </form>
             </div>
         <?php elseif (isset($_GET['page']) && $_GET['page'] === 'getstatuses'): ?>
-            <div x-data="getstatuses">
-                <span x-text="greeting" x-init="getStatuses"></span>
-                <form action="#" method="post">
-                    <input x-model="start" type="date" name="start" placeholder="Enter startDate">
-                    <input x-model="end" type="date" name="end" placeholder="Enter endDate">
+            <div x-data="getstatusesComponent" x-init="getStatuses">
+                <div>
+                    <span>start date</span><input x-model="start" type="date" name="start" title="Enter startDate" placeholder="Enter startDate">
+                    <span>end date</span><input x-model="end" type="date" name="end" title="Enter endDate" placeholder="Enter endDate">
                     <button @click="getStatuses">refresh statuses</button>
-                </form>
+                </div>
                 <table class=" table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
                     <thead>
                     <tr>

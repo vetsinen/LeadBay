@@ -1,5 +1,5 @@
 document.addEventListener('alpine:init', () => {
-    Alpine.data('addlead', () => ({
+    Alpine.data('addleadComponent', () => ({
         greeting: 'addlead app ',
         lead: {
             firstName: 'anon',
@@ -37,7 +37,7 @@ document.addEventListener('alpine:init', () => {
         }
     }));
 
-    Alpine.data('getstatuses', () => ({
+    Alpine.data('getstatusesComponent', () => ({
         greeting: 'getstatuses app ',
         start: '2024-04-01',
         end: '2024-04-30',

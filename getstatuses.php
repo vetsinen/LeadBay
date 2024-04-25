@@ -11,7 +11,6 @@ try {
     header('Content-Type: application/json');
     echo json_encode([
         'success' => $success,
-        'end'=>$_GET['end'],
         'data' =>  $data,
         'message' => 'Data processed'
     ]);
@@ -30,7 +29,7 @@ function getData()
         'date_from' => $_GET['start'],
         'date_to' => $_GET['end'],
         'page' => 0,
-        'limit' => 5
+        'limit' => 3
     ];
 
     $ch = curl_init();
@@ -42,6 +41,9 @@ function getData()
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
     $response = curl_exec($ch);
+    if (curl_errno($ch)) {
+        throw new Exception(curl_error($ch));
+    }
     curl_close($ch);
     $response = (json_decode($response, true));
     return $response['data'];
