@@ -29,7 +29,7 @@ function getData()
         'date_from' => $_GET['start'],
         'date_to' => $_GET['end'],
         'page' => 0,
-        'limit' => 3
+        'limit' => 7
     ];
 
     $ch = curl_init();
